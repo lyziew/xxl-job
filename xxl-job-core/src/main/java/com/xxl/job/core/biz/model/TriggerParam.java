@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class TriggerParam implements Serializable{
     private static final long serialVersionUID = 42L;
 
-    private int jobId;
+    private String jobId;
 
     private String executorHandler;
     private String executorParams;
@@ -26,11 +26,11 @@ public class TriggerParam implements Serializable{
     private int broadcastTotal;
 
 
-    public int getJobId() {
+    public String getJobId() {
         return jobId;
     }
 
-    public void setJobId(int jobId) {
+    public void setJobId(String jobId) {
         this.jobId = jobId;
     }
 

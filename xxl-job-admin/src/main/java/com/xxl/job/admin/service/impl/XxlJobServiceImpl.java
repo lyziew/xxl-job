@@ -94,8 +94,8 @@ public class XxlJobServiceImpl implements XxlJobService {
         if (jobInfo.getChildJobId()!=null && jobInfo.getChildJobId().trim().length()>0) {
 			String[] childJobIds = jobInfo.getChildJobId().split(",");
 			for (String childJobIdItem: childJobIds) {
-				if (childJobIdItem!=null && childJobIdItem.trim().length()>0 && isNumeric(childJobIdItem)) {
-					XxlJobInfo childJobInfo = xxlJobInfoDao.loadById(Integer.parseInt(childJobIdItem));
+				if (childJobIdItem!=null && childJobIdItem.trim().length()>0) {
+					XxlJobInfo childJobInfo = xxlJobInfoDao.loadById(childJobIdItem);
 					if (childJobInfo==null) {
 						return new ReturnT<String>(ReturnT.FAIL_CODE,
 								MessageFormat.format((I18nUtil.getString("jobinfo_field_childJobId")+"({0})"+I18nUtil.getString("system_not_found")), childJobIdItem));
@@ -120,8 +120,8 @@ public class XxlJobServiceImpl implements XxlJobService {
 		jobInfo.setAddTime(new Date());
 		jobInfo.setUpdateTime(new Date());
 		jobInfo.setGlueUpdatetime(new Date());
-		xxlJobInfoDao.save(jobInfo);
-		if (jobInfo.getId() < 1) {
+		int result = xxlJobInfoDao.save(jobInfo);
+		if (result <= 0) {
 			return new ReturnT<String>(ReturnT.FAIL_CODE, (I18nUtil.getString("jobinfo_field_add")+I18nUtil.getString("system_fail")) );
 		}
 
@@ -161,8 +161,8 @@ public class XxlJobServiceImpl implements XxlJobService {
         if (jobInfo.getChildJobId()!=null && jobInfo.getChildJobId().trim().length()>0) {
 			String[] childJobIds = jobInfo.getChildJobId().split(",");
 			for (String childJobIdItem: childJobIds) {
-				if (childJobIdItem!=null && childJobIdItem.trim().length()>0 && isNumeric(childJobIdItem)) {
-					XxlJobInfo childJobInfo = xxlJobInfoDao.loadById(Integer.parseInt(childJobIdItem));
+				if (childJobIdItem!=null && childJobIdItem.trim().length()>0) {
+					XxlJobInfo childJobInfo = xxlJobInfoDao.loadById(childJobIdItem);
 					if (childJobInfo==null) {
 						return new ReturnT<String>(ReturnT.FAIL_CODE,
 								MessageFormat.format((I18nUtil.getString("jobinfo_field_childJobId")+"({0})"+I18nUtil.getString("system_not_found")), childJobIdItem));
@@ -232,7 +232,7 @@ public class XxlJobServiceImpl implements XxlJobService {
 	}
 
 	@Override
-	public ReturnT<String> remove(int id) {
+	public ReturnT<String> remove(String id) {
 		XxlJobInfo xxlJobInfo = xxlJobInfoDao.loadById(id);
 		if (xxlJobInfo == null) {
 			return ReturnT.SUCCESS;
@@ -245,7 +245,7 @@ public class XxlJobServiceImpl implements XxlJobService {
 	}
 
 	@Override
-	public ReturnT<String> start(int id) {
+	public ReturnT<String> start(String id) {
 		XxlJobInfo xxlJobInfo = xxlJobInfoDao.loadById(id);
 
 		// next trigger time (5s后生效，避开预读周期)
@@ -271,7 +271,7 @@ public class XxlJobServiceImpl implements XxlJobService {
 	}
 
 	@Override
-	public ReturnT<String> stop(int id) {
+	public ReturnT<String> stop(String id) {
         XxlJobInfo xxlJobInfo = xxlJobInfoDao.loadById(id);
 
 		xxlJobInfo.setTriggerStatus(0);

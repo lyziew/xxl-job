@@ -1,6 +1,7 @@
 package com.xxl.job.admin.core.model;
 
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * xxl-job info
@@ -8,8 +9,12 @@ import java.util.Date;
  * @author xuxueli  2016-1-12 18:25:49
  */
 public class XxlJobInfo {
-	
-	private int id;				// 主键ID
+
+	public XxlJobInfo(){
+		 this.id = UUID.randomUUID().toString();
+	}
+
+	private String id;				// 主键ID
 	
 	private int jobGroup;		// 执行器主键ID
 	private String jobCron;		// 任务执行CRON表达式
@@ -40,11 +45,11 @@ public class XxlJobInfo {
 	private long triggerNextTime;	// 下次调度时间
 
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

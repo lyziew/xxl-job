@@ -9,7 +9,7 @@ import java.util.Date;
 public class XxlJobLogGlue {
 	
 	private int id;
-	private int jobId;				// 任务主键ID
+	private String jobId;				// 任务主键ID
 	private String glueType;		// GLUE类型	#com.xxl.job.core.glue.GlueTypeEnum
 	private String glueSource;
 	private String glueRemark;
@@ -24,11 +24,11 @@ public class XxlJobLogGlue {
 		this.id = id;
 	}
 
-	public int getJobId() {
+	public String getJobId() {
 		return jobId;
 	}
 
-	public void setJobId(int jobId) {
+	public void setJobId(String jobId) {
 		this.jobId = jobId;
 	}
 

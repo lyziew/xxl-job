@@ -20,7 +20,7 @@ public class XxlJobLogGlueDaoTest {
     @Test
     public void test(){
         XxlJobLogGlue logGlue = new XxlJobLogGlue();
-        logGlue.setJobId(1);
+        logGlue.setJobId("");
         logGlue.setGlueType("1");
         logGlue.setGlueSource("1");
         logGlue.setGlueRemark("1");
@@ -29,11 +29,11 @@ public class XxlJobLogGlueDaoTest {
         logGlue.setUpdateTime(new Date());
         int ret = xxlJobLogGlueDao.save(logGlue);
 
-        List<XxlJobLogGlue> list = xxlJobLogGlueDao.findByJobId(1);
+        List<XxlJobLogGlue> list = xxlJobLogGlueDao.findByJobId("");
 
-        int ret2 = xxlJobLogGlueDao.removeOld(1, 1);
+        int ret2 = xxlJobLogGlueDao.removeOld("", 1);
 
-        int ret3 =xxlJobLogGlueDao.deleteByJobId(1);
+        int ret3 =xxlJobLogGlueDao.deleteByJobId("");
     }
 
 }

@@ -19,14 +19,14 @@ public interface XxlJobLogDao {
 	public List<XxlJobLog> pageList(@Param("offset") int offset,
 									@Param("pagesize") int pagesize,
 									@Param("jobGroup") int jobGroup,
-									@Param("jobId") int jobId,
+									@Param("jobId") String jobId,
 									@Param("triggerTimeStart") Date triggerTimeStart,
 									@Param("triggerTimeEnd") Date triggerTimeEnd,
 									@Param("logStatus") int logStatus);
 	public int pageListCount(@Param("offset") int offset,
 							 @Param("pagesize") int pagesize,
 							 @Param("jobGroup") int jobGroup,
-							 @Param("jobId") int jobId,
+							 @Param("jobId") String jobId,
 							 @Param("triggerTimeStart") Date triggerTimeStart,
 							 @Param("triggerTimeEnd") Date triggerTimeEnd,
 							 @Param("logStatus") int logStatus);
@@ -39,7 +39,7 @@ public interface XxlJobLogDao {
 
 	public int updateHandleInfo(XxlJobLog xxlJobLog);
 	
-	public int delete(@Param("jobId") int jobId);
+	public int delete(@Param("jobId") String jobId);
 
 	public Map<String, Object> findLogReport(@Param("from") Date from,
 											 @Param("to") Date to);

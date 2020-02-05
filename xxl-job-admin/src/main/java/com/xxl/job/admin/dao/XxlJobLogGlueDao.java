@@ -15,10 +15,10 @@ public interface XxlJobLogGlueDao {
 	
 	public int save(XxlJobLogGlue xxlJobLogGlue);
 	
-	public List<XxlJobLogGlue> findByJobId(@Param("jobId") int jobId);
+	public List<XxlJobLogGlue> findByJobId(@Param("jobId") String jobId);
 
-	public int removeOld(@Param("jobId") int jobId, @Param("limit") int limit);
+	public int removeOld(@Param("jobId") String jobId, @Param("limit") int limit);
 
-	public int deleteByJobId(@Param("jobId") int jobId);
+	public int deleteByJobId(@Param("jobId") String jobId);
 	
 }
