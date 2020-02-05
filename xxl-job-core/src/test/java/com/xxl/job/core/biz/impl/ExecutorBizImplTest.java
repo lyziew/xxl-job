@@ -82,11 +82,10 @@ public class ExecutorBizImplTest {
 
     @Test
     public void idleBeat(){
-        final int jobId = 0;
+        final String jobId = "";
 
         // Act
         final ReturnT<String> retval = executorBiz.idleBeat(jobId);
-
         // Assert result
         Assert.assertNotNull(retval);
         Assert.assertNull(((ReturnT<String>) retval).getContent());
@@ -96,7 +95,7 @@ public class ExecutorBizImplTest {
 
     @Test
     public void kill(){
-        final int jobId = 0;
+        final String jobId = "";
 
         // Act
         final ReturnT<String> retval = executorBiz.kill(jobId);
@@ -125,7 +124,7 @@ public class ExecutorBizImplTest {
     public void run(){
         // trigger data
         final TriggerParam triggerParam = new TriggerParam();
-        triggerParam.setJobId(1);
+        triggerParam.setJobId("");
         triggerParam.setExecutorHandler("demoJobHandler");
         triggerParam.setExecutorParams(null);
         triggerParam.setExecutorBlockStrategy(ExecutorBlockStrategyEnum.COVER_EARLY.name());

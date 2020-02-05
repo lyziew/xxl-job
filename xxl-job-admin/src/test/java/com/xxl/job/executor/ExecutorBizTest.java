@@ -37,7 +37,7 @@ public class ExecutorBizTest {
     private static void runTest(String jobHandler, String params) throws Exception {
         // trigger data
         TriggerParam triggerParam = new TriggerParam();
-        triggerParam.setJobId(1);
+        triggerParam.setJobId("");
         triggerParam.setExecutorHandler(jobHandler);
         triggerParam.setExecutorParams(params);
         triggerParam.setExecutorBlockStrategy(ExecutorBlockStrategyEnum.COVER_EARLY.name());
