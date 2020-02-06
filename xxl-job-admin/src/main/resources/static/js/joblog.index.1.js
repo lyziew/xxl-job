@@ -11,7 +11,7 @@ $(function() {
 			dataType : "json",
 			success : function(data){
 				if (data.code == 200) {
-					$("#jobId").html( '<option value="0" >'+ I18n.system_all +'</option>' );
+					$("#jobId").html( '<option value="" >'+ I18n.system_all +'</option>' );
 					$.each(data.content, function (n, value) {
                         $("#jobId").append('<option value="' + value.id + '" >' + value.jobDesc + '</option>');
                     });

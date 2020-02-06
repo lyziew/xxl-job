@@ -12,6 +12,7 @@ import com.xxl.rpc.remoting.net.impl.netty_http.client.NettyHttpClient;
 import com.xxl.rpc.serialize.impl.HessianSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import sun.awt.X11.XSystemTrayPeer;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;

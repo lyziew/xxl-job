@@ -190,7 +190,7 @@ public class JobLogController {
 
 	@RequestMapping("/clearLog")
 	@ResponseBody
-	public ReturnT<String> clearLog(int jobGroup, int jobId, int type){
+	public ReturnT<String> clearLog(int jobGroup, String jobId, int type){
 
 		Date clearBeforeTime = null;
 		int clearBeforeNum = 0;

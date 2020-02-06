@@ -114,6 +114,11 @@ public class XxlJobTrigger {
         triggerParam.setExecutorHandler(jobInfo.getExecutorHandler());
         triggerParam.setExecutorParams(jobInfo.getExecutorParam());
         triggerParam.setExecutorBlockStrategy(jobInfo.getExecutorBlockStrategy());
+        if(ExecutorBlockStrategyEnum.CONCURRENT_EXECUTION == blockStrategy) {
+            triggerParam.setJobThreadId(jobInfo.getId() + "_" + jobLog.getId());
+        } else {
+            triggerParam.setJobThreadId(jobInfo.getId());
+        }
         triggerParam.setExecutorTimeout(jobInfo.getExecutorTimeout());
         triggerParam.setLogId(jobLog.getId());
         triggerParam.setLogDateTime(jobLog.getTriggerTime().getTime());

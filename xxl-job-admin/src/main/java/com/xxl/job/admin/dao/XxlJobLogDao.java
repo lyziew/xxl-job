@@ -45,7 +45,7 @@ public interface XxlJobLogDao {
 											 @Param("to") Date to);
 
 	public List<Long> findClearLogIds(@Param("jobGroup") int jobGroup,
-									  @Param("jobId") int jobId,
+									  @Param("jobId") String jobId,
 									  @Param("clearBeforeTime") Date clearBeforeTime,
 									  @Param("clearBeforeNum") int clearBeforeNum,
 									  @Param("pagesize") int pagesize);

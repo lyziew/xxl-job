@@ -27,7 +27,7 @@ import java.util.concurrent.*;
 public class JobThread extends Thread{
 	private static Logger logger = LoggerFactory.getLogger(JobThread.class);
 
-	private String jobId;
+	private String jobThreadId;
 	private IJobHandler handler;
 	private LinkedBlockingQueue<TriggerParam> triggerQueue;
 	private Set<Long> triggerLogIdSet;		// avoid repeat trigger for the same TRIGGER_LOG_ID
@@ -39,8 +39,8 @@ public class JobThread extends Thread{
 	private int idleTimes = 0;			// idel times
 
 
-	public JobThread(String jobId, IJobHandler handler) {
-		this.jobId = jobId;
+	public JobThread(String jobThreadId, IJobHandler handler) {
+		this.jobThreadId = jobThreadId;
 		this.handler = handler;
 		this.triggerQueue = new LinkedBlockingQueue<TriggerParam>();
 		this.triggerLogIdSet = Collections.synchronizedSet(new HashSet<Long>());
@@ -165,8 +165,8 @@ public class JobThread extends Thread{
 
 				} else {
 					if (idleTimes > 30) {
-						if(triggerQueue.size() == 0) {	// avoid concurrent trigger causes jobId-lost
-							XxlJobExecutor.removeJobThread(jobId, "excutor idel times over limit.");
+						if(triggerQueue.size() == 0) {	// avoid concurrent trigger causes jobThreadId-lost
+							XxlJobExecutor.removeJobThread(jobThreadId, "excutor idel times over limit.");
 						}
 					}
 				}

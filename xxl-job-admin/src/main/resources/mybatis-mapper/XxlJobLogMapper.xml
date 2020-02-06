@@ -71,7 +71,7 @@
 			<if test="jobId=='' and jobGroup gt 0">
 				AND t.job_group = #{jobGroup}
 			</if>
-			<if test="jobId gt ''">
+			<if test="jobId != ''">
 				AND t.job_id = #{jobId, jdbcType = VARCHAR}
 			</if>
 			<if test="triggerTimeStart != null">
@@ -215,7 +215,7 @@
 			<if test="jobGroup gt 0">
 				AND job_group = #{jobGroup}
 			</if>
-			<if test="jobId gt 0">
+			<if test="jobId != ''">
 				AND job_id = #{jobId, jdbcType = VARCHAR}
 			</if>
 			<if test="clearBeforeTime != null">
@@ -231,7 +231,7 @@
 					<if test="jobGroup gt 0">
 						AND t.job_group = #{jobGroup}
 					</if>
-					<if test="jobId gt 0">
+					<if test="jobId != ''">
 						AND t.job_id = #{jobId, jdbcType = VARCHAR}
 					</if>
 				</trim>

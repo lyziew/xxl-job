@@ -46,7 +46,7 @@ public class XxlJobLogDaoTest {
         dto = xxlJobLogDao.load(log.getId());
 
 
-        List<Long> ret4 = xxlJobLogDao.findClearLogIds(1, 1, new Date(), 100, 100);
+        List<Long> ret4 = xxlJobLogDao.findClearLogIds(1, "", new Date(), 100, 100);
 
         int ret2 = xxlJobLogDao.delete(log.getJobId());
 
