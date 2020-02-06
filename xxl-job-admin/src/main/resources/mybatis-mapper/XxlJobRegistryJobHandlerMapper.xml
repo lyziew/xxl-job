@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xxl.job.admin.dao.XxlJobRegistryJobHandlerDao">
+	
+	<resultMap id="XxlJobRegistryJobHandler" type="com.xxl.job.admin.core.model.XxlJobRegistryJobHandler" >
+		<result column="id" property="id" />
+	    <result column="registry_id" property="registryGroup" />
+	    <result column="jobhandler" property="jobHandler" />
+		<result column="update_time" property="updateTime" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		t.id,
+		t.registry_id,
+		t.jobhandler,
+		t.update_time
+	</sql>
+
+	<select id="findDead" parameterType="java.util.HashMap" resultType="java.lang.Integer" >
+		SELECT t.id
+		FROM xxl_job_registry_jobhandler t
+		WHERE t.update_time <![CDATA[ < ]]> ( current_timestamp - #{timeout}/86400 )
+	</select>
+	
+	<delete id="removeDead" parameterType="java.lang.Integer" >
+		DELETE FROM xxl_job_registry_jobhandler
+		WHERE id in
+		<foreach collection="ids" item="item" open="(" close=")" separator="," >
+			#{item}
+		</foreach>
+	</delete>
+
+	<select id="findAll" parameterType="java.util.HashMap" resultMap="XxlJobRegistryJobHandler">
+		SELECT <include refid="Base_Column_List" />
+		FROM xxl_job_registry_jobhandler t
+		WHERE t.update_time <![CDATA[ > ]]> ( current_timestamp - #{timeout}/86400 )
+	</select>
+
+    <update id="registryUpdate" >
+        UPDATE xxl_job_registry_jobhandler
+        SET update_time = #{updateTime}
+        WHERE registry_id = #{registryID}
+          AND jobhandler = #{jobHandler}
+    </update>
+
+    <insert id="registrySave" >
+		<selectKey resultType="int" order="BEFORE" keyProperty="id">
+			select SEQ_JOBREGISTRYJOBHANDLER.nextval from dual
+		</selectKey>
+        INSERT INTO xxl_job_registry_jobhandler( id, registry_id, jobhandler, update_time)
+        VALUES( #{id}, #{registryID}, #{jobHandler}, #{updateTime})
+    </insert>
+
+	<delete id="registryDelete" >
+		DELETE FROM xxl_job_registry_jobhandler
+		WHERE registry_id = #{registryID}
+	</delete>
+
+</mapper>

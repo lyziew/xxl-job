@@ -2,13 +2,12 @@ package com.xxl.job.admin.service.impl;
 
 import com.xxl.job.admin.core.model.XxlJobInfo;
 import com.xxl.job.admin.core.model.XxlJobLog;
+import com.xxl.job.admin.core.model.XxlJobRegistry;
+import com.xxl.job.admin.core.model.XxlJobRegistryJobHandler;
 import com.xxl.job.admin.core.thread.JobTriggerPoolHelper;
 import com.xxl.job.admin.core.trigger.TriggerTypeEnum;
 import com.xxl.job.admin.core.util.I18nUtil;
-import com.xxl.job.admin.dao.XxlJobGroupDao;
-import com.xxl.job.admin.dao.XxlJobInfoDao;
-import com.xxl.job.admin.dao.XxlJobLogDao;
-import com.xxl.job.admin.dao.XxlJobRegistryDao;
+import com.xxl.job.admin.dao.*;
 import com.xxl.job.core.biz.AdminBiz;
 import com.xxl.job.core.biz.model.HandleCallbackParam;
 import com.xxl.job.core.biz.model.RegistryParam;
@@ -39,7 +38,8 @@ public class AdminBizImpl implements AdminBiz {
     private XxlJobRegistryDao xxlJobRegistryDao;
     @Resource
     private XxlJobGroupDao xxlJobGroupDao;
-
+    @Resource
+    private XxlJobRegistryJobHandlerDao xxlJobRegistryJobHandlerDao;
 
     @Override
     public ReturnT<String> callback(List<HandleCallbackParam> callbackParamList) {
@@ -133,13 +133,20 @@ public class AdminBizImpl implements AdminBiz {
                 || !StringUtils.hasText(registryParam.getRegistryValue())) {
             return new ReturnT<String>(ReturnT.FAIL_CODE, "Illegal Argument.");
         }
-
-        int ret = xxlJobRegistryDao.registryUpdate(registryParam.getRegistryGroup(), registryParam.getRegistryKey(), registryParam.getRegistryValue(), new Date());
-        if (ret < 1) {
+        XxlJobRegistry registry = xxlJobRegistryDao.registryFind(registryParam.getRegistryGroup(), registryParam.getRegistryKey(), registryParam.getRegistryValue());
+        if (registry == null) {
             xxlJobRegistryDao.registrySave(registryParam.getRegistryGroup(), registryParam.getRegistryKey(), registryParam.getRegistryValue(), new Date());
-
+            int registry_id = xxlJobRegistryDao.registryFind(registryParam.getRegistryGroup(), registryParam.getRegistryKey(), registryParam.getRegistryValue()).getId();
+            for(String jobHandler: registryParam.getRegistryJobHandlerList()){
+                xxlJobRegistryJobHandlerDao.registrySave(registry_id,jobHandler,new Date());
+            }
             // fresh
             freshGroupRegistryInfo(registryParam);
+        } else {
+            xxlJobRegistryDao.registryUpdate(registryParam.getRegistryGroup(), registryParam.getRegistryKey(), registryParam.getRegistryValue(), new Date());
+            for(String jobHandler: registryParam.getRegistryJobHandlerList()){
+                xxlJobRegistryJobHandlerDao.registryUpdate(registry.getId(),jobHandler,new Date());
+            }
         }
         return ReturnT.SUCCESS;
     }
@@ -153,13 +160,16 @@ public class AdminBizImpl implements AdminBiz {
                 || !StringUtils.hasText(registryParam.getRegistryValue())) {
             return new ReturnT<String>(ReturnT.FAIL_CODE, "Illegal Argument.");
         }
-
-        int ret = xxlJobRegistryDao.registryDelete(registryParam.getRegistryGroup(), registryParam.getRegistryKey(), registryParam.getRegistryValue());
-        if (ret > 0) {
-
-            // fresh
-            freshGroupRegistryInfo(registryParam);
+        XxlJobRegistry registry = xxlJobRegistryDao.registryFind(registryParam.getRegistryGroup(), registryParam.getRegistryKey(), registryParam.getRegistryValue());
+        if(registry != null) {
+            int ret = xxlJobRegistryDao.registryDelete(registryParam.getRegistryGroup(), registryParam.getRegistryKey(), registryParam.getRegistryValue());
+            if (ret > 0) {
+                xxlJobRegistryJobHandlerDao.registryDelete(registry.getId());
+                // fresh
+                freshGroupRegistryInfo(registryParam);
+            }
         }
+
         return ReturnT.SUCCESS;
     }
 

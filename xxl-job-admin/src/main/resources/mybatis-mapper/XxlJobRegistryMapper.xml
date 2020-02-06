@@ -62,4 +62,13 @@
 			AND registry_value = #{registryValue}
 	</delete>
 
+
+	<select id="registryFind" resultMap="XxlJobRegistry">
+		SELECT id
+		FROM xxl_job_registry
+		WHERE registry_group = #{registryGroup}
+		AND registry_key = #{registryKey}
+		AND registry_value = #{registryValue}
+	</select>
+
 </mapper>

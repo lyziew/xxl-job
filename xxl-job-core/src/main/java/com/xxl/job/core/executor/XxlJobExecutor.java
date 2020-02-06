@@ -215,6 +215,10 @@ public class XxlJobExecutor  {
         return jobHandlerRepository.get(name);
     }
 
+    public static List getJobHandlerNameList(){
+        return new ArrayList(jobHandlerRepository.keySet());
+    }
+
 
     // ---------------------- job thread repository ----------------------
     private static ConcurrentMap<String, JobThread> jobThreadRepository = new ConcurrentHashMap<String, JobThread>();
