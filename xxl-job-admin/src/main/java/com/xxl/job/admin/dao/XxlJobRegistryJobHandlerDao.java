@@ -1,6 +1,7 @@
 package com.xxl.job.admin.dao;
 
 import com.xxl.job.admin.core.model.XxlJobRegistry;
+import com.xxl.job.admin.core.model.XxlJobRegistryJobHandler;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -18,8 +19,8 @@ public interface XxlJobRegistryJobHandlerDao {
 
     public int removeDead(@Param("ids") List<Integer> ids);
 
-    public List<XxlJobRegistry> findAll(@Param("timeout") int timeout,
-                                        @Param("nowTime") Date nowTime);
+    public List<XxlJobRegistryJobHandler> findAll(@Param("timeout") int timeout,
+                                                  @Param("nowTime") Date nowTime);
 
     public int registryUpdate(@Param("registryID") int registryID,
                               @Param("jobHandler") String jobHandler,

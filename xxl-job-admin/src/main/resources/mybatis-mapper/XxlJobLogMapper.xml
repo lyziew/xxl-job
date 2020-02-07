@@ -164,9 +164,9 @@
 			trigger_time = #{triggerTime},
 			trigger_code = #{triggerCode},
 			trigger_msg = #{triggerMsg},
-			executor_address = #{executorAddress},
+			executor_address = #{executorAddress, jdbcType = VARCHAR},
 			executor_handler = #{executorHandler, jdbcType = VARCHAR},
-			executor_param = #{executorParam},
+			executor_param = #{executorParam, jdbcType = VARCHAR},
 			executor_sharding_param = #{executorShardingParam, jdbcType=VARCHAR},
 			executor_fail_retry_count = #{executorFailRetryCount}
 		WHERE id = #{id}

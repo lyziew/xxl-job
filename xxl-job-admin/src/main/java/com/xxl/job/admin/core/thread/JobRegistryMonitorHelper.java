@@ -3,6 +3,7 @@ package com.xxl.job.admin.core.thread;
 import com.xxl.job.admin.core.conf.XxlJobAdminConfig;
 import com.xxl.job.admin.core.model.XxlJobGroup;
 import com.xxl.job.admin.core.model.XxlJobRegistry;
+import com.xxl.job.admin.core.model.XxlJobRegistryJobHandler;
 import com.xxl.job.core.enums.RegistryConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,11 +41,17 @@ public class JobRegistryMonitorHelper {
 								XxlJobAdminConfig.getAdminConfig().getXxlJobRegistryDao().removeDead(ids);
 							}
 
+							// remove dead jobHandler
+							ids = XxlJobAdminConfig.getAdminConfig().getXxlJobRegistryJobHandlerDao().findDead(RegistryConfig.DEAD_TIMEOUT, new Date());
+							if (ids!=null && ids.size()>0) {
+								XxlJobAdminConfig.getAdminConfig().getXxlJobRegistryJobHandlerDao().removeDead(ids);
+							}
+
 							// fresh online address (admin/executor)
 							HashMap<String, List<String>> appAddressMap = new HashMap<String, List<String>>();
-							List<XxlJobRegistry> list = XxlJobAdminConfig.getAdminConfig().getXxlJobRegistryDao().findAll(RegistryConfig.DEAD_TIMEOUT, new Date());
-							if (list != null) {
-								for (XxlJobRegistry item: list) {
+							List<XxlJobRegistry> appAddressList = XxlJobAdminConfig.getAdminConfig().getXxlJobRegistryDao().findAll(RegistryConfig.DEAD_TIMEOUT, new Date());
+							if (appAddressList != null) {
+								for (XxlJobRegistry item: appAddressList) {
 									if (RegistryConfig.RegistType.EXECUTOR.name().equals(item.getRegistryGroup())) {
 										String appName = item.getRegistryKey();
 										List<String> registryList = appAddressMap.get(appName);
@@ -56,6 +63,33 @@ public class JobRegistryMonitorHelper {
 											registryList.add(item.getRegistryValue());
 										}
 										appAddressMap.put(appName, registryList);
+									}
+								}
+							}
+
+							// fresh online jobHandler
+							HashMap<String, List<String>> jobHandlerMap = new HashMap<String, List<String>>();
+							HashMap<Integer, String> registryIDMap = new HashMap<Integer, String>();
+							if (appAddressList != null) {
+								for (XxlJobRegistry item: appAddressList) {
+									if(!jobHandlerMap.containsKey(item.getRegistryValue())) {
+										jobHandlerMap.put(item.getRegistryValue(),new ArrayList<>());
+									}
+
+									if(!registryIDMap.containsKey(item.getId())) {
+										registryIDMap.put(item.getId(), item.getRegistryValue());
+									}
+								}
+							}
+
+							List<XxlJobRegistryJobHandler> jobHandlerList = XxlJobAdminConfig.getAdminConfig().getXxlJobRegistryJobHandlerDao().findAll(RegistryConfig.DEAD_TIMEOUT, new Date());
+							if (jobHandlerList != null) {
+								for(XxlJobRegistryJobHandler item: jobHandlerList) {
+									if(registryIDMap.containsKey(item.getRegistryId())) {
+										String address = registryIDMap.get(item.getRegistryId());
+										if(jobHandlerMap.containsKey(address)){
+											jobHandlerMap.get(address).add(item.getJobHandler());
+										}
 									}
 								}
 							}

@@ -5,7 +5,7 @@
 	
 	<resultMap id="XxlJobRegistryJobHandler" type="com.xxl.job.admin.core.model.XxlJobRegistryJobHandler" >
 		<result column="id" property="id" />
-	    <result column="registry_id" property="registryGroup" />
+	    <result column="registry_id" property="registryId" />
 	    <result column="jobhandler" property="jobHandler" />
 		<result column="update_time" property="updateTime" />
 	</resultMap>

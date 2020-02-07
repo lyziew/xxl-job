@@ -8,9 +8,9 @@ import java.util.Date;
 public class XxlJobRegistryJobHandler {
 
     private int id;
-    private int registry_id;
+    private int registryId;
+    private String jobHandler;
     private Date updateTime;
-
     public int getId() {
         return id;
     }
@@ -19,13 +19,23 @@ public class XxlJobRegistryJobHandler {
         this.id = id;
     }
 
-    public int getRegistry_id() {
-        return registry_id;
+    public int getRegistryId() {
+        return registryId;
     }
 
-    public void setRegistry_id(int registry_id) {
-        this.registry_id = registry_id;
+    public void setRegistryId(int registry_id) {
+        this.registryId = registry_id;
     }
+
+
+    public String getJobHandler() {
+        return jobHandler;
+    }
+
+    public void setJobHandler(String jobHandler) {
+        this.jobHandler = jobHandler;
+    }
+
 
     public Date getUpdateTime() {
         return updateTime;

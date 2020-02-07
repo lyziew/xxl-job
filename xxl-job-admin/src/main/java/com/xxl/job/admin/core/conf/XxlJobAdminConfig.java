@@ -75,6 +75,8 @@ public class XxlJobAdminConfig implements InitializingBean, DisposableBean {
     @Resource
     private XxlJobRegistryDao xxlJobRegistryDao;
     @Resource
+    private XxlJobRegistryJobHandlerDao xxlJobRegistryJobHandlerDao;
+    @Resource
     private XxlJobGroupDao xxlJobGroupDao;
     @Resource
     private XxlJobLogReportDao xxlJobLogReportDao;
@@ -130,6 +132,8 @@ public class XxlJobAdminConfig implements InitializingBean, DisposableBean {
     public XxlJobRegistryDao getXxlJobRegistryDao() {
         return xxlJobRegistryDao;
     }
+
+    public XxlJobRegistryJobHandlerDao getXxlJobRegistryJobHandlerDao() {return xxlJobRegistryJobHandlerDao; }
 
     public XxlJobGroupDao getXxlJobGroupDao() {
         return xxlJobGroupDao;
