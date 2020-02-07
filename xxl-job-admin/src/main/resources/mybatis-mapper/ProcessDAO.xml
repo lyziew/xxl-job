@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xxl.job.admin.dao.ProcessDAO">
+  <resultMap id="BaseResultMap" type="com.xxl.job.admin.core.model.Process">
+    <id column="XH" jdbcType="VARCHAR" property="XH" />
+    <result column="MC" jdbcType="VARCHAR" property="MC" />
+    <result column="CJZ" jdbcType="VARCHAR" property="CJZ" />
+    <result column="MS" jdbcType="VARCHAR" property="MS" />
+    <result column="BB" jdbcType="VARCHAR" property="BB" />
+    <result column="ZT" jdbcType="DECIMAL" property="ZT" />
+    <result column="CJSJ" jdbcType="TIMESTAMP" property="CJSJ" />
+    <result column="GXSJ" jdbcType="TIMESTAMP" property="GXSJ" />
+    <result column="PZ" jdbcType="CLOB" property="PZ" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    XH, MC, CJZ, MS, BB, ZT, CJSJ, GXSJ,  PZ
+  </sql>
+  <sql id="Blob_Column_List">
+
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from KX00_ZGJS_JSLC
+    where XH = #{XH,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from KX00_ZGJS_JSLC
+    where XH = #{XH,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insert" parameterType="com.xxl.job.admin.core.model.Process">
+    insert into KX00_ZGJS_JSLC (XH, MC, CJZ, 
+      MS, BB, ZT, CJSJ, 
+      GXSJ, PZ)
+    values (#{XH,jdbcType=VARCHAR}, #{MC,jdbcType=VARCHAR}, #{CJZ,jdbcType=VARCHAR}, 
+      #{MS,jdbcType=VARCHAR}, #{BB,jdbcType=VARCHAR}, #{ZT,jdbcType=DECIMAL}, #{CJSJ,jdbcType=TIMESTAMP}, 
+      #{GXSJ,jdbcType=TIMESTAMP}, #{PZ,jdbcType=CLOB})
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.xxl.job.admin.core.model.Process">
+    update KX00_ZGJS_JSLC
+    <set>
+      <if test="MC != null">
+        MC = #{MC,jdbcType=VARCHAR},
+      </if>
+      <if test="CJZ != null">
+        CJZ = #{CJZ,jdbcType=VARCHAR},
+      </if>
+      <if test="MS != null">
+        MS = #{MS,jdbcType=VARCHAR},
+      </if>
+      <if test="BB != null">
+        BB = #{BB,jdbcType=VARCHAR},
+      </if>
+      <if test="ZT != null">
+        ZT = #{ZT,jdbcType=DECIMAL},
+      </if>
+      <if test="CJSJ != null">
+        CJSJ = #{CJSJ,jdbcType=TIMESTAMP},
+      </if>
+      <if test="GXSJ != null">
+        GXSJ = #{GXSJ,jdbcType=TIMESTAMP},
+      </if>
+      <if test="PZ != null">
+        PZ = #{PZ,jdbcType=CLOB},
+      </if>
+    </set>
+    where XH = #{XH,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.xxl.job.admin.core.model.Process">
+    update KX00_ZGJS_JSLC
+    set MC = #{MC,jdbcType=VARCHAR},
+      CJZ = #{CJZ,jdbcType=VARCHAR},
+      MS = #{MS,jdbcType=VARCHAR},
+      BB = #{BB,jdbcType=VARCHAR},
+      ZT = #{ZT,jdbcType=DECIMAL},
+      CJSJ = #{CJSJ,jdbcType=TIMESTAMP},
+      GXSJ = #{GXSJ,jdbcType=TIMESTAMP},
+      PZ = #{PZ,jdbcType=CLOB}
+    where XH = #{XH,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

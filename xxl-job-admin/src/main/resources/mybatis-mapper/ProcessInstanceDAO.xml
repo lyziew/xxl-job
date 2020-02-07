@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xxl.job.admin.dao.ProcessInstanceDAO">
+  <resultMap id="BaseResultMap" type="com.xxl.job.admin.core.model.ProcessInstance">
+    <id column="XH" jdbcType="DECIMAL" property="XH" />
+    <result column="QQXH" jdbcType="VARCHAR" property="QQXH" />
+    <result column="LCXH" jdbcType="VARCHAR" property="LCXH" />
+    <result column="YXZT" jdbcType="DECIMAL" property="YXZT" />
+    <result column="CJSJ" jdbcType="TIMESTAMP" property="CJSJ" />
+    <result column="GXSJ" jdbcType="TIMESTAMP" property="GXSJ" />
+    <result column="CSLB" jdbcType="CLOB" property="CSLB" />
+    <result column="JSJG" jdbcType="CLOB" property="JSJG" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    XH, QQXH, LCXH, YXZT, CJSJ, GXSJ, CSLB, JSJG
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from KX00_ZGJS_JSLCSL
+    where XH = #{XH,jdbcType=DECIMAL}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from KX00_ZGJS_JSLCSL
+    where XH = #{XH,jdbcType=DECIMAL}
+  </delete>
+
+  <insert id="insert" parameterType="com.xxl.job.admin.core.model.ProcessInstance">
+    insert into KX00_ZGJS_JSLCSL (XH, QQXH, LCXH, 
+      YXZT, CJSJ, GXSJ, 
+      CSLB, JSJG)
+    values (#{XH,jdbcType=DECIMAL}, #{QQXH,jdbcType=VARCHAR}, #{LCXH,jdbcType=VARCHAR}, 
+      #{YXZT,jdbcType=DECIMAL}, #{CJSJ,jdbcType=TIMESTAMP}, #{GXSJ,jdbcType=TIMESTAMP}, 
+      #{CSLB,jdbcType=CLOB}, #{JSJG,jdbcType=CLOB})
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.xxl.job.admin.core.model.ProcessInstance">
+    update KX00_ZGJS_JSLCSL
+    <set>
+      <if test="QQXH != null">
+        QQXH = #{QQXH,jdbcType=VARCHAR},
+      </if>
+      <if test="LCXH != null">
+        LCXH = #{LCXH,jdbcType=VARCHAR},
+      </if>
+      <if test="YXZT != null">
+        YXZT = #{YXZT,jdbcType=DECIMAL},
+      </if>
+      <if test="CJSJ != null">
+        CJSJ = #{CJSJ,jdbcType=TIMESTAMP},
+      </if>
+      <if test="GXSJ != null">
+        GXSJ = #{GXSJ,jdbcType=TIMESTAMP},
+      </if>
+      <if test="CSLB != null">
+        CSLB = #{CSLB,jdbcType=CLOB},
+      </if>
+      <if test="JSJG != null">
+        JSJG = #{JSJG,jdbcType=CLOB},
+      </if>
+    </set>
+    where XH = #{XH,jdbcType=DECIMAL}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.xxl.job.admin.core.model.ProcessInstance">
+    update KX00_ZGJS_JSLCSL
+    set QQXH = #{QQXH,jdbcType=VARCHAR},
+      LCXH = #{LCXH,jdbcType=VARCHAR},
+      YXZT = #{YXZT,jdbcType=DECIMAL},
+      CJSJ = #{CJSJ,jdbcType=TIMESTAMP},
+      GXSJ = #{GXSJ,jdbcType=TIMESTAMP},
+      CSLB = #{CSLB,jdbcType=CLOB},
+      JSJG = #{JSJG,jdbcType=CLOB}
+    where XH = #{XH,jdbcType=DECIMAL}
+  </update>
+
+</mapper>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xxl.job.admin.dao.NodeDAO">
+  <resultMap id="BaseResultMap" type="com.xxl.job.admin.core.model.Node">
+    <id column="XH" jdbcType="DECIMAL" property="XH" />
+    <result column="MC" jdbcType="VARCHAR" property="MC" />
+    <result column="DZ" jdbcType="VARCHAR" property="DZ" />
+    <result column="ZT" jdbcType="DECIMAL" property="ZT" />
+    <result column="CJSJ" jdbcType="TIMESTAMP" property="CJSJ" />
+    <result column="GXSJ" jdbcType="TIMESTAMP" property="GXSJ" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    XH, MC, DZ, ZT, CJSJ, GXSJ
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from KX00_ZGJS_JSJD
+    where XH = #{XH,jdbcType=DECIMAL}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from KX00_ZGJS_JSJD
+    where XH = #{XH,jdbcType=DECIMAL}
+  </delete>
+
+  <insert id="insert" parameterType="com.xxl.job.admin.core.model.Node">
+    insert into KX00_ZGJS_JSJD (XH, MC, DZ, ZT, 
+      CJSJ, GXSJ)
+    values (#{XH,jdbcType=DECIMAL}, #{MC,jdbcType=VARCHAR}, #{DZ,jdbcType=VARCHAR}, #{ZT,jdbcType=DECIMAL}, 
+      #{CJSJ,jdbcType=TIMESTAMP}, #{GXSJ,jdbcType=TIMESTAMP})
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.xxl.job.admin.core.model.Node">
+    update KX00_ZGJS_JSJD
+    <set>
+      <if test="MC != null">
+        MC = #{MC,jdbcType=VARCHAR},
+      </if>
+      <if test="DZ != null">
+        DZ = #{DZ,jdbcType=VARCHAR},
+      </if>
+      <if test="ZT != null">
+        ZT = #{ZT,jdbcType=DECIMAL},
+      </if>
+      <if test="CJSJ != null">
+        CJSJ = #{CJSJ,jdbcType=TIMESTAMP},
+      </if>
+      <if test="GXSJ != null">
+        GXSJ = #{GXSJ,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where XH = #{XH,jdbcType=DECIMAL}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.xxl.job.admin.core.model.Node">
+    update KX00_ZGJS_JSJD
+    set MC = #{MC,jdbcType=VARCHAR},
+      DZ = #{DZ,jdbcType=VARCHAR},
+      ZT = #{ZT,jdbcType=DECIMAL},
+      CJSJ = #{CJSJ,jdbcType=TIMESTAMP},
+      GXSJ = #{GXSJ,jdbcType=TIMESTAMP}
+    where XH = #{XH,jdbcType=DECIMAL}
+  </update>
+</mapper>
