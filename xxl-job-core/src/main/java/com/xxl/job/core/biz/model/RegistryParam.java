@@ -70,7 +70,9 @@ public class RegistryParam implements Serializable {
         for (String item:registryJobHandlerList) {
             registryJobHandlerListStr += "'" + item + "',";
         }
-        registryJobHandlerListStr = registryJobHandlerListStr.substring(0, registryJobHandlerListStr.length()-1);
+        if(registryJobHandlerListStr.length()>0) {
+            registryJobHandlerListStr = registryJobHandlerListStr.substring(0, registryJobHandlerListStr.length()-1);
+        }
 
         return "RegistryParam {" +
                 "registryGroup='" + registryGroup + '\'' +
